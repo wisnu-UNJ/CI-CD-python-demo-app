@@ -1,6 +1,6 @@
 variables:
-  - IMAGE_NAME: extwisnu/demo-app
-  - IMAGE_TAG: python-app-1.0
+  IMAGE_NAME: extwisnu/demo-app
+  IMAGE_TAG: python-app-1.0
 
 run_tests:
   image: python:3.9-slim-buster
