@@ -13,7 +13,6 @@ build_image:
   image: docker:latest
   services:
     - name: docker:dind
-      privileged: true
 
   variables:
     DOCKER_HOST: "tcp://docker:2375"
