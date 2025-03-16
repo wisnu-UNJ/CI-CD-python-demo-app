@@ -1,6 +1,17 @@
+variables:
+  - IMAGE_NAME: extwisnu/demo-app
+  - IMAGE_TAG: python-app-1.0
+
 run_tests:
   image: python:3.9-slim-buster
   before_script:
     - apt-get update && apt install make
   script:
     - make test
+
+build_image:
+  before_script:
+    docker login -u $REGISTRY_USER -p Pnd77net!
+  script:
+    - docker build -t $IMAGE_NAME:$IMAGE_TAG
+    - docker push $IMAGE_NAME:$IMAGE_TAG
