@@ -10,13 +10,14 @@ run_tests:
     - make test
 
 build_image:  
-  image: docker:20.10.16
+  image: docker:latest
   services:
-    - name: docker:20.10.16-dind
-      command: ["--tls=false", "--host=tcp://0.0.0.0:2375"]
+    - name: docker:dind
+      privileged: true
+
   variables:
     DOCKER_HOST: "tcp://docker:2375"
-    DOCKER_TLS_CERTDIR: ""  # Nonaktifkan TLS untuk akses DinD
+
   before_script:
     - docker info
     - export REGISTRY_USER="admin@adastra.id"
