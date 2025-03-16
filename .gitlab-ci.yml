@@ -1,0 +1,4 @@
+build:
+  script:
+    - date # print current date
+    - cat /etc/os-release # print os version for Linux
