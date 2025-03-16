@@ -15,6 +15,7 @@ build_image:
   services:
     - docker:20.10.16-dind
   before_script:
+    - docker info
     - export REGISTRY_USER="admin@adastra.id"
     - export REGISTRY_PASS="Skills39s"
     - echo "$REGISTRY_PASS" | docker login -u "$REGISTRY_USER" --password-stdin
