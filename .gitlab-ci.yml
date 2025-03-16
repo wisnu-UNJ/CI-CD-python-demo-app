@@ -1,6 +1,6 @@
 run_tests:
   image: python:3.9-slim-buster
   before_script:
-    - apt-get update && apt install make && pip install "jinja2<3.1.0"
+    - apt-get update && apt install make
   script:
     - make test
