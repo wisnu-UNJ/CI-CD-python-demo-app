@@ -1,4 +1,6 @@
-build:
+run_tests:
+  image: python:3.9-slim-buster
+  before_script:
+    - apt-get update && apt install make
   script:
-    - date # print current date
-    - cat /etc/os-release # print os version for Linux
+    - make test
