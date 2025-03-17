@@ -27,5 +27,5 @@ build_image:
     - export REGISTRY_PASS="Skills39s"
     - echo "$REGISTRY_PASS" | docker login -u "$REGISTRY_USER" --password-stdin
   script:
-    - docker build -t extwisnu/demo-app:python-app-1.0 .
+    - docker build -t extwisnu/demo-app:python-app-1.0 build/.
     - docker push extwisnu/demo-app:python-app-1.0
