@@ -12,16 +12,18 @@ run_tests:
 build_image:  
   image: docker:20.10.16
   services:
-  - name: docker:20.10.16-dind
-    alias: docker
-    command: ["--tls=false"]
+    - name: docker:20.10.16-dind
+      alias: docker
+      command: ["--tls=false"]
 
- 
+  variables: 
+    DOCKER_HOST: tcp://docker:2375
+
   before_script:
-    - sleep 10
+    - sleep 10  # Menunggu Docker DinD siap
     - export REGISTRY_USER="ext.wisnu@adastra.id"
     - export REGISTRY_PASS="Skills39s"
     - echo "$REGISTRY_PASS" | docker login -u "$REGISTRY_USER" --password-stdin
   script:
-    - docker build -t $IMAGE_NAME:$IMAGE_TAG .
+    - docker build -t $IMAGE_NAME:$IMAGE_TAG build/.
     - docker push $IMAGE_NAME:$IMAGE_TAG
