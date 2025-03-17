@@ -9,7 +9,7 @@ build_image:
     - name: docker:20.10.16-dind
       alias: docker
       command: ["--tls=false"]
-      privileged: true
+
 
   before_script:
     - export REGISTRY_USER="ext.wisnu@adastra.id"
