@@ -16,7 +16,7 @@ build_image:
       alias: docker
   
   variables: 
-    DOCKER_HOST: tcp://docker:2376
+    DOCKER_HOST: tcp://docker:2375
 
  
   before_script:
