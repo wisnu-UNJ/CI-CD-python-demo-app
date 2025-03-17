@@ -16,7 +16,7 @@ build_image:
       alias: docker
       command: ["--tls=false"]
   
-  network_mode: "host"  # Tambahkan ini
+
 
   variables: 
     DOCKER_HOST: tcp://localhost:2375  # Gunakan localhost
