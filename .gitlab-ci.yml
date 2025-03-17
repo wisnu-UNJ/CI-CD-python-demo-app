@@ -22,6 +22,7 @@ build_image:
   dependencies: []  # Tambahkan ini
   
   before_script:
+    - sleep 20
     - export REGISTRY_USER="admin@adastra.id"
     - export REGISTRY_PASS="Skills39s"
     - echo "$REGISTRY_PASS" | docker login -u "$REGISTRY_USER" --password-stdin
