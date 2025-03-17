@@ -26,5 +26,5 @@ build_image:
     - export REGISTRY_PASS="Skills39s"
     - echo "$REGISTRY_PASS" | docker login -u "$REGISTRY_USER" --password-stdin
   script:
-    - docker build -t $IMAGE_NAME:$IMAGE_TAG .
+    - docker build -t $IMAGE_NAME:$IMAGE_TAG build/.
     - docker push $IMAGE_NAME:$IMAGE_TAG
