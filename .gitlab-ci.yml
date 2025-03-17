@@ -1,31 +1,29 @@
-variables:
-  IMAGE_NAME: extwisnu/demo-app
-  IMAGE_TAG: python-app-1.0
+# Build and push the Docker image off of merges to master; based off
+# of Gitlab CI support in https://pythonspeed.com/products/pythoncontainer/
+docker-build:
+  stage: build
 
-run_tests:
-  image: python:3.9-slim-buster
-  before_script:
-    - apt-get update && apt install make
-  script:
-    - make test
+  image:
+    # An alpine-based image with the `docker` CLI installed.
+    name: docker:stable
 
-build_image:  
-  image: docker:20.10.16
+  # This will run a Docker daemon in a container (Docker-In-Docker), which will
+  # be available at thedockerhost:2375. If you make e.g. port 5000 public in Docker
+  # (`docker run -p 5000:5000 yourimage`) it will be exposed at thedockerhost:5000.
   services:
-    - name: docker:20.10.16-dind
-      alias: docker
-      command: ["--tls=false"]
-  
+   - name: docker:dind
+     alias: thedockerhost
 
+  variables:
+    # Tell docker CLI how to talk to Docker daemon; see
+    # https://docs.gitlab.com/ee/ci/docker/using_docker_build.html#use-docker-in-docker-executor
+    DOCKER_HOST: tcp://thedockerhost:2375/
+    # Use the overlayfs driver for improved performance:
+    DOCKER_DRIVER: overlay2
+    DOCKER_TLS_CERTDIR: ""
 
-  variables: 
-    DOCKER_HOST: tcp://localhost:2375  # Gunakan localhost
-
-  before_script:
-    - export REGISTRY_USER="ext.wisnu@adastra.id"
-    - export REGISTRY_PASS="Skills39s"
-    - echo "$REGISTRY_PASS" | docker login -u "$REGISTRY_USER" --password-stdin
   script:
-    - systemctl start docker
-    - docker build -t extwisnu/demo-app:python-app-1.0 build/.
-    - docker push extwisnu/demo-app:python-app-1.0
+    # Download bash:
+    - docker info
+    # GitLab has a built-in Docker image registry, whose parameters are set automatically.
+ 
