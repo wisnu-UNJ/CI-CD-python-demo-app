@@ -1,20 +1,27 @@
 variables:
   IMAGE_NAME: extwisnu/demo-app
   IMAGE_TAG: python-app-1.0
-  DOCKER_HOST: tcp://docker:2375
 
-build_image:
+run_tests:
+  image: python:3.9-slim-buster
+  before_script:
+    - apt-get update && apt install make
+  script:
+    - make test
+
+build_image:  
   image: docker:20.10.16
   services:
     - name: docker:20.10.16-dind
       alias: docker
-      command: ["--tls=false"]
-
-
+      
+  variables:
+    DOCKER_HOST: tcp://docker:2375
+ 
   before_script:
     - export REGISTRY_USER="ext.wisnu@adastra.id"
     - export REGISTRY_PASS="Skills39s"
-    - echo "$REGISTRY_PASS" | docker login -u "$REGISTRY_USER" --password-stdin 
-
+    - echo "$REGISTRY_PASS" | docker login -u "$REGISTRY_USER" --password-stdin
   script:
-    - docker info
+    - docker build -t $IMAGE_NAME:$IMAGE_TAG .
+    - docker push $IMAGE_NAME:$IMAGE_TAG
