@@ -15,13 +15,14 @@ build_image:
     - name: docker:20.10.16-dind
       alias: docker
       command: ["--tls=false"]
+  
+  network_mode: "host"  # Tambahkan ini
 
   variables: 
-    DOCKER_HOST: tcp://docker:2375
+    DOCKER_HOST: tcp://localhost:2375  # Gunakan localhost
 
-  dependencies: []  # Tambahkan ini
-  
   before_script:
+    - sleep 10
     - export REGISTRY_USER="admin@adastra.id"
     - export REGISTRY_PASS="Skills39s"
     - echo "$REGISTRY_PASS" | docker login -u "$REGISTRY_USER" --password-stdin
