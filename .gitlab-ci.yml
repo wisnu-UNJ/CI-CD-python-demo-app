@@ -19,6 +19,7 @@ build_image:
     DOCKER_HOST: tcp://docker:2375
  
   before_script:
+    - sleep 20
     - export REGISTRY_USER="ext.wisnu@adastra.id"
     - export REGISTRY_PASS="Skills39s"
     - echo "$REGISTRY_PASS" | docker login -u "$REGISTRY_USER" --password-stdin
