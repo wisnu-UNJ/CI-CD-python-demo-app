@@ -1,16 +1,27 @@
-build:
-  stage: build
+variables:
+  IMAGE_NAME: extwisnu/demo-app
+  IMAGE_TAG: python-app-1.0
+
+run_tests:
+  image: python:3.9-slim-buster
+  before_script:
+    - apt-get update && apt install make
+  script:
+    - make test
+
+build_image:  
   image: docker:20.10.16
   services:
     - name: docker:20.10.16-dind
       alias: docker
-  
-  variables: 
+      
+  variables:
     DOCKER_HOST: tcp://docker:2376
-    DOCKER_TLS_CERTDIR: "/certs"
-    DOCKER_TLS_VERIFY: 1
-    DOCKER_CERT_PATH: "/certs/client"
+ 
+  before_script:
+    - export REGISTRY_USER="admin@adastra.id"
+    - export REGISTRY_PASS="Skills39s"
+    - echo "$REGISTRY_PASS" | docker login -u "$REGISTRY_USER" --password-stdin
   script:
-    - docker ps
-  only:
-  - master
+    - docker build -t $IMAGE_NAME:$IMAGE_TAG .
+    - docker push $IMAGE_NAME:$IMAGE_TAG
