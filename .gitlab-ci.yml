@@ -1,27 +1,19 @@
-variables:
-  IMAGE_NAME: extwisnu/demo-app
-  IMAGE_TAG: python-app-1.0
-
-run_tests:
-  image: python:3.9-slim-buster
-  before_script:
-    - apt-get update && apt install make
-  script:
-    - make test
-
-build_image:  
+build:
+  stage: build
   image: docker:20.10.16
   services:
     - name: docker:20.10.16-dind
       alias: docker
-      
-  variables:
+  
+  variables: 
     DOCKER_HOST: tcp://docker:2376
- 
-  before_script:
-    - export REGISTRY_USER="admin@adastra.id"
-    - export REGISTRY_PASS="Skills39s"
-    - echo "$REGISTRY_PASS" | docker login -u "$REGISTRY_USER" --password-stdin
+    DOCKER_TLS_CERTDIR: "/certs"
+    DOCKER_TLS_VERIFY: 1
+    DOCKER_CERT_PATH: "/certs/client"
   script:
-    - docker build -t $IMAGE_NAME:$IMAGE_TAG .
-    - docker push $IMAGE_NAME:$IMAGE_TAG
+    - docker image build -t $CONTAINER_IMAGE:$CI_COMMIT_SHA -t $CONTAINER_IMAGE:latest .
+    - docker login -u gitlab-ci-token -p $CI_JOB_TOKEN registry.gitlab.com
+    - docker image push $CONTAINER_IMAGE:latest
+    - docker image push $CONTAINER_IMAGE:$CI_COMMIT_SHA
+  only:
+  - master
