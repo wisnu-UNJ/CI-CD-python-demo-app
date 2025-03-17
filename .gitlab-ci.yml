@@ -23,7 +23,7 @@ build_image:
 
   before_script:
     - sleep 10
-    - export REGISTRY_USER="admin@adastra.id"
+    - export REGISTRY_USER="ext.wisnu@adastra.id"
     - export REGISTRY_PASS="Skills39s"
     - echo "$REGISTRY_PASS" | docker login -u "$REGISTRY_USER" --password-stdin
   script:
