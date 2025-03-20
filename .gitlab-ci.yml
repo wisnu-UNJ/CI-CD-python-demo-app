@@ -10,18 +10,19 @@ run_tests:
     - make test
 
 build_image:  
-  image: docker:20.10.16
+  image: docker:latest
   services:
-    - name: docker:20.10.16-dind
+    - name: docker:dind
       alias: docker
       command: ["--tls=false"]
-  
 
   variables: 
-    DOCKER_HOST: tcp://localhost:2375  # Gunakan localhost
+    DOCKER_HOST: tcp://docker:2375  # Gunakan 'docker' bukan 'localhost'
+    DOCKER_TLS_CERTDIR: ""  # Nonaktifkan TLS (wajib)
 
   before_script:
-    - sleep 14
+    - sleep 14  # Tunggu Docker DinD siap
+    - docker info  # Cek apakah Docker berjalan
     - export REGISTRY_USER="ext.wisnu@adastra.id"
     - export REGISTRY_PASS="Skills39s"
     - echo "$REGISTRY_PASS" | docker login -u "$REGISTRY_USER" --password-stdin
