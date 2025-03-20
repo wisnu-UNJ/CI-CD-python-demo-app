@@ -30,5 +30,5 @@ build_image:
     - pwd
     - ls -lah
     - ls -lah src/app
-    - docker build -t $IMAGE_NAME:$IMAGE_TAG build/.
+    - docker build -t $IMAGE_NAME:$IMAGE_TAG .
     - docker push $IMAGE_NAME:$IMAGE_TAG
