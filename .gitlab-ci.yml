@@ -50,8 +50,5 @@ deploy:
         export REGISTRY_USER="ext.wisnu@adastra.id" &&
         export REGISTRY_PASS="Skills39s" &&
         echo "$REGISTRY_PASS" | docker login -u "$REGISTRY_USER" --password-stdin &&
-        docker push $IMAGE_NAME:$IMAGE_TAG
-
-    "
-
+        docker run -d -p 5000:5000 $IMAGE_NAME:$IMAGE_TAG"
     
