@@ -3,19 +3,14 @@ FROM python:3.9-slim-buster
 LABEL Name="Python Flask Demo App" Version=1.4.2
 LABEL org.opencontainers.image.source = "https://github.com/benc-uk/python-demoapp"
 
+ARG srcDir=src
 WORKDIR /app
-
-# Pastikan file requirements.txt ada
-COPY src/requirements.txt .
-
-# Install dependencies
+COPY ../src/requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy file aplikasi
-COPY src/run.py .
-COPY src/app /app
+COPY ../src/run.py .
+COPY ../src/app ./app
 
-# Expose port aplikasi
 EXPOSE 5000
 
 CMD ["gunicorn", "-b", "0.0.0.0:5000", "run:app"]
