@@ -43,5 +43,7 @@ build_image:
 deploy:
   stage: deploy
   script:
-    - ssh -o StrictHostKeyChecking=no -p Pnd77net! root@10.10.12.108
+    - apt install sshpass
+    - sshpass -p "Pnd77net!" ssh -o StrictHostKeyChecking=no root@10.10.12.108
+
     
