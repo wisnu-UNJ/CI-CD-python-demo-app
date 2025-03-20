@@ -13,7 +13,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy file aplikasi
 COPY src/run.py .
-COPY src/app ./app
+COPY src/app /app
 
 # Expose port aplikasi
 EXPOSE 5000
