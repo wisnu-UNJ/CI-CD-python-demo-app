@@ -45,7 +45,7 @@ deploy:
   image: ubuntu
   script:
     - apt update
-    - apt install sshpass
+    - apt install sshpass -y
     - sshpass -p "Pnd77net!" ssh -o StrictHostKeyChecking=no root@10.10.12.108
 
     
