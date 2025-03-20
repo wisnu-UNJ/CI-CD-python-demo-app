@@ -46,6 +46,12 @@ deploy:
   script:
     - apt update
     - apt install sshpass -y
-    - sshpass -p "Pnd77net!" ssh -o StrictHostKeyChecking=no root@10.10.12.108
+    - sshpass -p "Pnd77net!" ssh -o StrictHostKeyChecking=no root@10.10.12.108 "
+        export REGISTRY_USER="ext.wisnu@adastra.id" &&
+        export REGISTRY_PASS="Skills39s" &&
+        echo "$REGISTRY_PASS" | docker login -u "$REGISTRY_USER" --password-stdin &&
+        docker push $IMAGE_NAME:$IMAGE_TAG
+
+    "
 
     
