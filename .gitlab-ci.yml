@@ -2,14 +2,21 @@ variables:
   IMAGE_NAME: extwisnu/demo-app
   IMAGE_TAG: python-app-1.0
 
+stages:
+  - test
+  - build
+  - deploy
+
 run_tests:
+  stage: test
   image: python:3.9-slim-buster
   before_script:
     - apt-get update && apt install make
   script:
     - make test
 
-build_image:  
+build_image: 
+  stage: build 
   image: docker:latest
   services:
     - name: docker:dind
@@ -32,3 +39,17 @@ build_image:
     - ls -lah src/app
     - docker build -t $IMAGE_NAME:$IMAGE_TAG .
     - docker push $IMAGE_NAME:$IMAGE_TAG
+
+deploy:
+  stage: deploy
+  before_script:
+    - export SSH_USER="root"
+    - export SSH_PASS="Pnd77net!"
+    - export REGISTRY_USER="ext.wisnu@adastra.id"
+    - export REGISTRY_PASS="Skills39s"
+    - echo "$REGISTRY_PASS" | docker login -u "$REGISTRY_USER" --password-stdin
+  script:
+    - ssh -o StrictHostKeyChecking=no -p $SSH_PASS root@10.10.12.108 "
+    - docker ps -aq | xargs docker stop | xargs docker rm &&
+    - docker run -p 5000:5000 $IMAGE_NAME:$IMAGE_TAG"
+    
