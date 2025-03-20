@@ -28,7 +28,7 @@ build_image:
     DOCKER_TLS_CERTDIR: ""  # Nonaktifkan TLS (wajib)
 
   before_script:
-    - export REGISTRY_USER="ext.wisnu@adastra.id"
+    - export REGISTRY_USER="inputuser"
     - export REGISTRY_PASS="inputpassword"
     - echo "$REGISTRY_PASS" | docker login -u "$REGISTRY_USER" --password-stdin
     
@@ -47,7 +47,7 @@ deploy:
     - apt update
     - apt install sshpass -y
     - sshpass -p "inputpassword" ssh -t -o StrictHostKeyChecking=no root@10.10.12.108 "
-        export REGISTRY_USER='ext.wisnu@adastra.id' &&
+        export REGISTRY_USER='inputuser' &&
         export REGISTRY_PASS='inputpassword' &&
         echo \"\$REGISTRY_PASS\" | docker login -u \"\$REGISTRY_USER\" --password-stdin &&
         docker run -d -p 5000:5000 extwisnu/demo-app:python-app-1.0"
